@@ -15,9 +15,8 @@ gcc \
 	hb-buffer-serialize.cc \
 	hb-common.cc \
 	hb-set.cc \
-	hb-ft.cc \
 	hb-font.cc \
-	hb-ot*.cc \
+	hb-face.cc \
 	hb-fallback-shape.cc \
 	hb-shape-plan.cc \
 	hb-shape.cc \
@@ -25,12 +24,18 @@ gcc \
 	hb-tt-font.cc \
 	hb-unicode.cc \
 	hb-warning.cc \
+	\
+	-DHAVE_OT \
+	hb-ot*.cc \
+	\
+	-DHAVE_UCDN \
 	hb-ucdn.cc \
 	\
+	-DHAVE_FREETYPE \
+	hb-ft.cc \
+	\
 	-I. \
-	-DHAVE_OT \
 	-DHAVE_INTEL_ATOMIC_PRIMITIVES \
-	-DHAVE_UCDN \
 	-I../../freetype/include \
 	-I../../harfbuzz-ucdn \
 	-L../../../linux/bin \

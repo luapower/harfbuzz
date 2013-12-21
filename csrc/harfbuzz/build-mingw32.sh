@@ -1,5 +1,8 @@
 # harfbuzz build with opentype, ucdn, freetype. dynamically links to ucdn and freetype.
 
+
+cd src || exit 1
+
 for f in `ls *.rl`; do
 	if [ ! -f "${f%.*}.hh" ]; then
 		ragel "$f" -e -F1 -o "${f%.*}.hh"
@@ -12,9 +15,8 @@ gcc \
 	hb-buffer-serialize.cc \
 	hb-common.cc \
 	hb-set.cc \
-	hb-ft.cc \
 	hb-font.cc \
-	hb-ot*.cc \
+	hb-face.cc \
 	hb-fallback-shape.cc \
 	hb-shape-plan.cc \
 	hb-shape.cc \
@@ -22,15 +24,19 @@ gcc \
 	hb-tt-font.cc \
 	hb-unicode.cc \
 	hb-warning.cc \
+	\
+	-DHAVE_OT \
+	hb-ot*.cc \
+	\
+	-DHAVE_UCDN \
 	hb-ucdn.cc \
 	\
+	-DHAVE_FREETYPE \
+	hb-ft.cc \
+	\
 	-I. \
-	-DHAVE_OT \
-	-DHAVE_UCDN \
-	-I../freetype \
-	-I../harfbuzz-ucdn \
-	-L../../bin \
-	-lucdn \
-	-lfreetype-6 \
+	-I../../freetype/include \
+	-I../../harfbuzz-ucdn \
+	-L../../../bin -lucdn -lfreetype \
 	-fno-exceptions -fno-rtti \
-	-O3 -s -shared -o ../../bin/harfbuzz.dll
+	-O3 -s -shared -static-libgcc -o ../../../bin/harfbuzz.dll
