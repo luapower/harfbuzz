@@ -9,7 +9,7 @@ A ffi binding to the [HarfBuzz] text shaping library.
 
 work in progress...
 
-There's a quick demo to try out in the meantime (for which you'll need some fonts).
+There's a quick demo to try out in the meantime (for which you'll need the freetype package).
 
 TODO: integrate more from this: https://github.com/lxnt/ex-sdl-freetype-harfbuzz/blob/master/ex-sdl-freetype-harfbuzz.c
 
