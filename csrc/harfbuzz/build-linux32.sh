@@ -37,10 +37,10 @@ gcc \
 	-I. \
 	-DHAVE_INTEL_ATOMIC_PRIMITIVES \
 	-I../../freetype/include \
-	-I../../harfbuzz-ucdn \
-	-L../../../linux/bin \
+	-I../../ucdn \
+	-L../../../bin/linux32 \
 	-lucdn \
 	-D__MINGW32__ \
 	-lfreetype \
 	-fno-exceptions -fno-rtti \
-	-O3 -s -shared -o ../../../linux/bin/libharfbuzz.so
+	-O3 -s -shared -o ../../../bin/linux32/libharfbuzz.so

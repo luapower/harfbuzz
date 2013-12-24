@@ -36,7 +36,7 @@ gcc \
 	\
 	-I. \
 	-I../../freetype/include \
-	-I../../harfbuzz-ucdn \
-	-L../../../bin -lucdn -lfreetype \
+	-I../../ucdn \
+	-L../../../bin/mingw32 -lucdn -lfreetype \
 	-fno-exceptions -fno-rtti \
-	-O3 -s -shared -static-libgcc -o ../../../bin/harfbuzz.dll
+	-O3 -s -shared -static-libgcc -o ../../../bin/mingw32/harfbuzz.dll
