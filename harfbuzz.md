@@ -1,6 +1,7 @@
 ---
-project: harfbuzz
-tagline: complex text shaping
+project:     harfbuzz
+tagline:     complex text shaping
+category:    Text Rendering
 ---
 
 ## `local harfbuzz = require'harfbuzz'`
