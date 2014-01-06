@@ -1,4 +1,4 @@
-harfbuzz 0.9.25 from http://www.freedesktop.org/software/harfbuzz/release/
+harfbuzz 0.9.25 from http://www.freedesktop.org/software/harfbuzz/release/ (MIT License)
 
 NOTE: mingw32 has a MemoryBarrier() definition that harfbuzz can't work with,
 so I changed harfbuzz to ignore it and use its own definition.
