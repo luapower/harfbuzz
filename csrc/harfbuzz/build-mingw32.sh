@@ -9,7 +9,7 @@ for f in `ls *.rl`; do
 	fi
 done
 
-gcc \
+gcc $CFLAGS -shared -o ../../../bin/mingw32/harfbuzz.dll \
 	hb-blob.cc \
 	hb-buffer.cc \
 	hb-buffer-serialize.cc \
@@ -38,5 +38,4 @@ gcc \
 	-I../../freetype/include \
 	-I../../ucdn \
 	-L../../../bin/mingw32 -lucdn -lfreetype \
-	-fno-exceptions -fno-rtti \
-	-O3 -s -shared -static-libgcc -o ../../../bin/mingw32/harfbuzz.dll
+	-fno-exceptions -fno-rtti

@@ -9,7 +9,7 @@ for f in `ls *.rl`; do
 	fi
 done
 
-gcc \
+gcc $CFLAGS -shared -o ../../../bin/linux32/libharfbuzz.so \
 	hb-blob.cc \
 	hb-buffer.cc \
 	hb-buffer-serialize.cc \
@@ -42,5 +42,4 @@ gcc \
 	-lucdn \
 	-D__MINGW32__ \
 	-lfreetype \
-	-fno-exceptions -fno-rtti \
-	-O3 -s -shared -o ../../../bin/linux32/libharfbuzz.so
+	-fno-exceptions -fno-rtti
