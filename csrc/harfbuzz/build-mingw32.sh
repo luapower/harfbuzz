@@ -9,7 +9,7 @@ for f in `ls *.rl`; do
 	fi
 done
 
-gcc $CFLAGS -shared -o ../../../bin/mingw32/harfbuzz.dll \
+gcc -O2 -s -static-libgcc -shared -o ../../../bin/mingw32/harfbuzz.dll \
 	hb-blob.cc \
 	hb-buffer.cc \
 	hb-buffer-serialize.cc \

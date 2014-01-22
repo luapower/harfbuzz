@@ -9,7 +9,7 @@ for f in `ls *.rl`; do
 	fi
 done
 
-gcc $CFLAGS -shared -o ../../../bin/linux32/libharfbuzz.so \
+gcc -O2 -s -static-libgcc -shared -o ../../../bin/linux32/libharfbuzz.so \
 	hb-blob.cc \
 	hb-buffer.cc \
 	hb-buffer-serialize.cc \
