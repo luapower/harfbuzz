@@ -1,0 +1,12 @@
+*
+!/bin/
+!/csrc/
+!/bin/mingw32/
+!/bin/linux32/
+!/media/
+
+!/harfbuzz*
+!/bin/mingw32/harfbuzz*
+!/bin/linux32/libharfbuzz*
+!/csrc/harfbuzz/
+!/csrc/harfbuzz/**
