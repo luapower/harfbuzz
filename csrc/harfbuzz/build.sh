@@ -11,7 +11,7 @@ for f in `ls *.rl`; do
 	fi
 done
 
-gcc $CFLAGS -shared -o ../../../bin/$PLATFORM/$LIBNAME \
+$CC $CFLAGS -shared -o ../../../bin/$PLATFORM/$LIBNAME \
 	hb-blob.cc \
 	hb-buffer.cc \
 	hb-buffer-serialize.cc \
