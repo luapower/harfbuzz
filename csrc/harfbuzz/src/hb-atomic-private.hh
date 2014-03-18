@@ -47,7 +47,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#if defined(__MINGW32__) //&& !defined(MemoryBarrier)
+#if defined(__MINGW32__) && !defined(__MINGW64__)
 static inline void _HBMemoryBarrier (void) {
   long dummy = 0;
   InterlockedExchange (&dummy, 1);
