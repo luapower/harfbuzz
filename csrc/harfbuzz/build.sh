@@ -1,8 +1,5 @@
 # harfbuzz build with opentype, ucdn, freetype. dynamically links to ucdn and freetype.
-
-[ "$PLATFORM" ] || exit 1 # this is a template script
-
-cd src
+cd src || exit 1
 
 # pre-processing step: convert *.rl -> *.hh with ragel
 for f in `ls *.rl`; do
@@ -11,35 +8,36 @@ for f in `ls *.rl`; do
 	fi
 done
 
-$CC $CFLAGS -shared -o ../../../bin/$PLATFORM/$LIBNAME \
-	hb-blob.cc \
-	hb-buffer.cc \
-	hb-buffer-serialize.cc \
-	hb-common.cc \
-	hb-set.cc \
-	hb-font.cc \
-	hb-face.cc \
-	hb-fallback-shape.cc \
-	hb-shape-plan.cc \
-	hb-shape.cc \
-	hb-shaper.cc \
-	hb-tt-font.cc \
-	hb-unicode.cc \
-	hb-warning.cc \
-	\
-	-DHAVE_OT \
-	hb-ot*.cc \
-	\
-	-DHAVE_UCDN \
-	hb-ucdn.cc \
-	\
-	-DHAVE_FREETYPE \
-	hb-ft.cc \
-	\
-	-I. \
-	-I../../freetype/include \
-	-I../../ucdn \
-	-L../../../bin/$PLATFORM \
-	-lucdn \
-	-lfreetype \
+C="$C
+hb-blob.cc
+hb-buffer.cc
+hb-buffer-serialize.cc
+hb-common.cc
+hb-set.cc
+hb-font.cc
+hb-face.cc
+hb-fallback-shape.cc
+hb-shape-plan.cc
+hb-shape.cc
+hb-shaper.cc
+hb-tt-font.cc
+hb-unicode.cc
+hb-warning.cc
+
+-DHAVE_OT
+hb-ot*.cc
+
+-DHAVE_UCDN
+hb-ucdn.cc
+
+-DHAVE_FREETYPE
+hb-ft.cc
+"
+
+# TODO: remove the __MINGW32__ hack
+gcc -c -O2 $C -DHAVE_INTEL_ATOMIC_PRIMITIVES -D__MINGW32__ \
+	-I. -I../../freetype/include -I../../ucdn \
 	-fno-exceptions -fno-rtti
+gcc *.o -shared -o ../../../bin/$P/$D -L../../../bin/$P -lfreetype -lucdn $L
+ar rcs ../../../bin/$P/$A *.o
+rm *.o

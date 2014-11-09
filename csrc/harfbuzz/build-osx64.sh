@@ -1,7 +1,2 @@
-# harfbuzz build with opentype, ucdn, freetype. dynamically links to ucdn and freetype.
-# TODO: remove the __MINGW32__ hack
-export CC=gcc
-export CFLAGS="-arch x86_64 -install_name @loader_path/libharfbuzz.dylib -O2 -DHAVE_INTEL_ATOMIC_PRIMITIVES -D__MINGW32__"
-export PLATFORM=osx64
-export LIBNAME=libharfbuzz.dylib
-./build.sh
+P=osx64 C="-arch x86_64" L="-arch x86_64 -install_name @loader_path/libharfbuzz.dylib" \
+	D=libharfbuzz.dylib A=libharfbuzz.a ./build.sh
