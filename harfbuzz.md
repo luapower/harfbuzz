@@ -15,3 +15,27 @@ TODO: integrate more from this: https://github.com/lxnt/ex-sdl-freetype-harfbuzz
 
 
 [harfbuzz lib]: http://www.freedesktop.org/wiki/Software/HarfBuzz/
+
+## Building
+
+After upgrading harfbuzz, building it requires removing the included .hh files
+and recreating them with [Ragel](https://www.colm.net/open-source/ragel/).
+Ragel builds with luapower's toolchain just fine:
+
+Get it:
+
+	wget https://www.colm.net/files/ragel/ragel-6.9.tar.gz
+	tar xfv ragel-6.9.tar.gz
+	cd ragel-6.9
+
+Linux / OSX:
+
+	./configure
+	make
+	make install
+
+Windows:
+
+	sh configure
+	make
+	cp ragel/ragel.exe <mingw-install-dir>/bin
