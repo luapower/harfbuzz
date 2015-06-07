@@ -32,7 +32,7 @@ Linux / OSX:
 
 	./configure
 	make
-	make install
+	sudo make install
 
 Windows:
 
