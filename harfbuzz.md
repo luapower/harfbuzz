@@ -1,5 +1,4 @@
 ---
-project: harfbuzz
 tagline: complex text shaping
 ---
 
