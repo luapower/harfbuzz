@@ -1,5 +1,6 @@
 harfbuzz 1.8.2 from http://www.freedesktop.org/software/harfbuzz/release/ (MIT License)
-requires: ucdn
+requires: ucdn, freetype
+
 
 NOTE: mingw32 has a MemoryBarrier() definition that harfbuzz can't work with,
 so I changed harfbuzz (hb-atomic-private.hh line 50) to use its own definition in that case.
