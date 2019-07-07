@@ -31,7 +31,7 @@ hb-ucd.cc
 
 ${X}gcc -c -Os $C -DHAVE_INTEL_ATOMIC_PRIMITIVES \
 	-I. -I../../freetype/include \
-	-fno-exceptions -fno-rtti -fvisibility-inlines-hidden
+	-std=c++11 -fno-exceptions -fno-rtti -fvisibility-inlines-hidden
 ${X}gcc *.o -flto -shared -o ../../../bin/$P/$D \
 	-Wl,--version-script=../harfbuzz.version -L../../../bin/$P $L -lfreetype
 rm -f      ../../../bin/$P/$A
