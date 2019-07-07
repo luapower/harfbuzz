@@ -5,7 +5,7 @@ local cairo = require'cairo'
 local time = require'time'
 local player = require'cplayer'
 
-local function shape_text(s, ft_face, hb_font, size, direction, script, language, features)
+local function shape_text(s, ft_face, size, direction, script, language, features)
 	local buf = hb.buffer()
 	buf:set_direction(direction or hb.C.HB_DIRECTION_LTR)
 	buf:set_script(script or hb.C.HB_SCRIPT_UNKNOWN)
@@ -24,6 +24,7 @@ local function shape_text(s, ft_face, hb_font, size, direction, script, language
 	end
 
 	ft_face:set_char_size(size * 64)
+	local hb_font = hb.ft_font(ft_face, nil)
 	buf:shape(hb_font, feats, feats_count)
 	local glyph_count = buf:get_length()
 	local glyph_info  = buf:get_glyph_infos()
@@ -38,6 +39,7 @@ local function shape_text(s, ft_face, hb_font, size, direction, script, language
 		y = y - glyph_pos[i].y_advance / 64
 	end
 	buf:free()
+	hb_font:free()
 
 	return cairo_glyphs, glyph_count
 end
@@ -58,7 +60,7 @@ function player:draw_glyphs(x, y, cairo_glyphs, glyph_count, cairo_face, size, u
 end
 
 function player:draw_text(x, y, s, font, size, direction, script, language, features, use_show_glyphs)
-	local glyphs, glyph_count = shape_text(s, font.ft_face, font.hb_font, size, direction, script, language, features)
+	local glyphs, glyph_count = shape_text(s, font.ft_face, size, direction, script, language, features)
 	self:draw_glyphs(x, y, glyphs, glyph_count, font.cairo_face, size, use_show_glyphs)
 end
 
@@ -68,11 +70,9 @@ ffi.gc(ft_lib, nil)
 local function font(filename, load_flags)
 	local ft_face = ft_lib:face(filename)
 	local cairo_face = cairo.ft_font_face(ft_face, load_flags or 0)
-	local hb_font = hb.ft_font(ft_face, nil)
 	ffi.gc(ft_face, nil)
 	ffi.gc(cairo_face, nil)
-	ffi.gc(hb_font, nil)
-	return {ft_face = ft_face, cairo_face = cairo_face, hb_font = hb_font}
+	return {ft_face = ft_face, cairo_face = cairo_face}
 end
 
 local amiri = font'media/fonts/amiri-regular.ttf'
@@ -164,7 +164,9 @@ function player:on_render(cr)
 
 	local y = 0
 	for i=6,26 do
-		self:draw_text(100 + sub, 200 + y, 'iiiiiiiiii - Te VA - This is Some English Text - Jumped', selected_font, i,
+		self:draw_text(100 + sub, 200 + y,
+							'iiiiiiiiii - Te VA - This is Some English Text - Jumped!',
+							selected_font, i,
 							hb.C.HB_DIRECTION_LTR, hb.C.HB_SCRIPT_LATIN, 'en', nil, use_show_glyphs)
 		y = y + i
 	end

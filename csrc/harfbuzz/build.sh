@@ -1,13 +1,5 @@
-# harfbuzz build with opentype, ucdn, freetype. dynamically links to ucdn and freetype.
+# harfbuzz build with opentype, aat, freetype. dynamically links to freetype.
 cd src || exit 1
-
-# pre-processing step: convert *.rl -> *.hh with ragel
-for f in `ls *.rl`; do
-	if [ ! -f "${f%.*}.hh" ]; then
-		ragel "$f" -e -F1 -o "${f%.*}.hh"
-	fi
-done
-
 
 C="$C
 hb-blob.cc
@@ -25,8 +17,7 @@ hb-shaper.cc
 hb-static.cc
 hb-unicode.cc
 hb-warning.cc
-
--DHAVE_OT
+hb-aat-*.cc
 hb-ot*.cc
 
 -DHAVE_FREETYPE
@@ -35,14 +26,14 @@ hb-ft.cc
 -DHAVE_FALLBACK
 hb-fallback-shape.cc
 
--DHAVE_UCDN
-hb-ucdn.cc
+hb-ucd.cc
 "
 
-${X}gcc -c -O2 $C -DHAVE_INTEL_ATOMIC_PRIMITIVES -DUCDN_EXPORT \
-	-I. -I../../freetype/include -I../../ucdn \
-	-fno-exceptions -fno-rtti
-${X}gcc *.o -shared -o ../../../bin/$P/$D -L../../../bin/$P $L -lfreetype -lucdn
+${X}gcc -c -Os $C -DHAVE_INTEL_ATOMIC_PRIMITIVES \
+	-I. -I../../freetype/include \
+	-fno-exceptions -fno-rtti -fvisibility-inlines-hidden
+${X}gcc *.o -flto -shared -o ../../../bin/$P/$D \
+	-Wl,--version-script=../harfbuzz.version -L../../../bin/$P $L -lfreetype
 rm -f      ../../../bin/$P/$A
 ${X}ar rcs ../../../bin/$P/$A *.o
 rm *.o

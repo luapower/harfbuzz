@@ -1,0 +1,4 @@
+harfbuzz {
+	global: hb_*;
+	local: *;
+};
